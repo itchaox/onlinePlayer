@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-02 17:54
+ * @LastTime   : 2023-12-02 18:39
  * @desc       : 
 -->
 <script setup>
@@ -63,7 +63,7 @@
       <div class="tip-text title">操作步骤:</div>
       <div class="tip-text">1. 选择单元格的视频地址或输入视频地址</div>
       <div class="tip-text">2. 点击【确认播放】按钮即可</div>
-      <div class="tip-text">Tips: M3U8 格式需要选择直播或回放模式</div>
+      <div class="tip-text">Tips: M3U8 和 FLV 格式需要选择直播或回放模式</div>
     </div>
     <div class="label">
       <div class="text">视频格式：</div>
@@ -83,7 +83,7 @@
     </div>
     <div
       class="label"
-      v-if="videoType === 'm3u8'"
+      v-if="videoType !== 'mp4'"
     >
       <div>是否直播：</div>
       <el-switch v-model="isLive" />
