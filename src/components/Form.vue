@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2023-11-24 01:08
+ * @LastTime   : 2023-12-02 17:54
  * @desc       : 
 -->
 <script setup>
@@ -16,15 +16,17 @@
 
   const videoUrl = ref('');
 
-  const isM3u8 = ref(false);
   const isLive = ref(false);
+
+  const videoType = ref('mp4');
 
   const player = ref();
 
-  function getPlayer(player) {
-    player.value = player;
-    console.log('🚀  player.value:', player.value.play());
-  }
+  const isAutoPlay = ref(false);
+
+  watch(videoType, (newValue, oldValue) => {
+    isLive.value = false;
+  });
 
   function play() {
     if (!videoUrl.value) {
@@ -35,14 +37,8 @@
       return;
     }
 
-    console.log('🚀111  player.value:', player.value);
-    player.value?.play();
+    player.value?.init();
   }
-
-  watch(videoUrl, (newValue, oldValue) => {
-    const extension = newValue.toLowerCase().split('.').pop();
-    isM3u8.value = extension === 'm3u8';
-  });
 
   base.onSelectionChange(async (event) => {
     // 获取点击的字段id和记录id
@@ -66,24 +62,36 @@
     <div class="tip">
       <div class="tip-text title">操作步骤:</div>
       <div class="tip-text">1. 选择单元格的视频地址或输入视频地址</div>
-      <div class="tip-text">2. M3U8 格式需要选择直播或回放模式</div>
-      <div class="tip-text">3. 点击[确认播放]按钮即可</div>
-      <div class="tip-text">Tip: 视频支持格式为 MP4、FLV、M3U8</div>
+      <div class="tip-text">2. 点击【确认播放】按钮即可</div>
+      <div class="tip-text">Tips: M3U8 格式需要选择直播或回放模式</div>
     </div>
+    <div class="label">
+      <div class="text">视频格式：</div>
+      <el-radio-group v-model="videoType">
+        <el-radio-button label="mp4">MP4</el-radio-button>
+        <el-radio-button label="flv">FLV</el-radio-button>
+        <el-radio-button label="m3u8">M3U8</el-radio-button>
+      </el-radio-group>
+    </div>
+
     <div class="label">
       <div>视频地址：</div>
       <el-input
         v-model="videoUrl"
         placeholder="请输入视频地址"
-        size="small"
       />
     </div>
     <div
       class="label"
-      v-if="isM3u8"
+      v-if="videoType === 'm3u8'"
     >
       <div>是否直播：</div>
       <el-switch v-model="isLive" />
+    </div>
+
+    <div class="label">
+      <div>自动播放：</div>
+      <el-switch v-model="isAutoPlay" />
     </div>
 
     <el-button
@@ -91,13 +99,13 @@
       @click="play"
       >确认播放</el-button
     >
-    <div
-      class="video"
-      v-if="videoUrl"
-    >
+    <div class="video">
       <xg-player
+        ref="player"
+        :video-type="videoType"
         :url="videoUrl"
-        :getPlayer="getPlayer"
+        :isAutoPlay="isAutoPlay"
+        :m3u8Type="isLive ? 'live' : 'replay'"
       />
     </div>
   </div>
