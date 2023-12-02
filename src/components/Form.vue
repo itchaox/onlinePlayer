@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-02 21:15
+ * @LastTime   : 2023-12-03 05:56
  * @desc       : 
 -->
 <script setup>
@@ -51,10 +51,29 @@
       // 获取当前数据
       let data = await table.getCellValue(fieldId, recordId);
       if (data && data[0].text !== videoUrl.value) {
-        videoUrl.value = data[0].text;
+        if (isValidVideoUrlSuffix(data[0].text)) {
+          videoUrl.value = data[0].text;
+          ElMessage({
+            message: '成功获取选中单元格的视频地址~',
+            type: 'success',
+            duration: 1500,
+          });
+        } else {
+          ElMessage({
+            message: '选中单元格的视频地址格式有误!',
+            type: 'error',
+            duration: 1500,
+          });
+        }
       }
     }
   });
+
+  function isValidVideoUrlSuffix(url) {
+    // 正则表达式用于匹配MP4、FLV和M3U8格式的视频链接后缀
+    const validSuffixes = /\.(mp4|flv|m3u8)$/i;
+    return validSuffixes.test(url);
+  }
 </script>
 
 <template>
