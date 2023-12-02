@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-06-28 20:09
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-02 17:49
+ * @LastTime   : 2023-12-02 19:01
  * @desc       : 西瓜播放器组件
 -->
 
@@ -47,6 +47,8 @@
       videoAttributes: {
         crossOrigin: 'anonymous',
       },
+      pip: true,
+      screenShot: true,
       lang: 'zh',
       ...getVideoConfig(),
       ignores: ['fullscreen'],
@@ -160,6 +162,6 @@
     right: 0;
     width: 10px;
     height: 10px;
-    cursor: pointer;
+    cursor: nwse-resize;
   }
 </style>
