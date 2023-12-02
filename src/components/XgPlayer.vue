@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-06-28 20:09
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-02 19:01
+ * @LastTime   : 2023-12-03 06:48
  * @desc       : 西瓜播放器组件
 -->
 
@@ -70,7 +70,6 @@
    * @return { Object } 视频配置
    */
   function getVideoConfig() {
-    console.log('🚀  props.m3u8Type:', props.m3u8Type);
     switch (props.videoType) {
       case 'm3u8':
         return {
