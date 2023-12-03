@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-03 17:52
+ * @LastTime   : 2023-12-03 20:58
  * @desc       : 
 -->
 <script setup>
@@ -92,6 +92,10 @@
   };
 
   const volume = ref(0.6);
+
+  const clear = () => {
+    historyVideoList.value = [];
+  };
 </script>
 
 <template>
@@ -126,11 +130,18 @@
     </div>
     <el-collapse v-model="activeNames">
       <el-collapse-item
-        title="历史记录"
+        title="播放记录"
         name="1"
       >
         <div class="collapse-list">
           <template v-if="historyVideoList?.length > 0">
+            <span
+              @click="clear"
+              class="clear"
+            >
+              <el-icon><DeleteFilled /></el-icon>
+              <span class="clear-text">清空播放记录</span>
+            </span>
             <div
               v-for="(item, index) in historyVideoList"
               :key="index"
@@ -148,8 +159,8 @@
           </template>
           <template v-else>
             <el-empty
-              description="暂无历史记录"
-              :image-size="100"
+              description="暂无播放记录"
+              :image-size="50"
             />
           </template>
         </div>
@@ -238,14 +249,26 @@
     font-size: 14px;
   }
 
-  .button {
-  }
-
   .video {
     margin-top: 14px;
   }
 
   .collapse-list {
+    text-align: left;
+  }
+
+  .clear {
+    display: inline-flex;
+    align-items: center;
+    color: #f56c6c;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.6;
+    }
+  }
+
+  .clear-text {
+    margin-left: 4px;
   }
 
   .collapse-item {
