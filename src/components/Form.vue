@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-03 21:42
+ * @LastTime   : 2023-12-03 21:56
  * @desc       : 
 -->
 <script setup>
@@ -91,7 +91,7 @@
     videoType.value = extension;
   };
 
-  const volume = ref(0.6);
+  const volume = ref(60);
 
   const clear = () => {
     historyVideoList.value = [];
@@ -173,9 +173,9 @@
         <el-input-number
           v-model="volume"
           :min="0"
-          :max="1"
+          :max="100"
           size="small"
-          :step="0.1"
+          :step="10"
           controls-position="right"
         />
       </div>

@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-06-28 20:09
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-03 17:56
+ * @LastTime   : 2023-12-03 21:58
  * @desc       : 西瓜播放器组件
 -->
 
@@ -42,7 +42,6 @@
       height: 245,
       autoplay: props.isAutoPlay,
       url: props.url || 'http://vjs.zencdn.net/v/oceans.mp4',
-      volume: props.volume,
       videoAttributes: {
         crossOrigin: 'anonymous',
       },
@@ -52,6 +51,10 @@
       lang: 'zh',
       ...getVideoConfig(),
       ignores: ['fullscreen'],
+      volume: {
+        default: props.volume / 100,
+        showValueLabel: true,
+      },
     });
   }
 
