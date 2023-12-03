@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-06-28 20:09
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-03 17:39
+ * @LastTime   : 2023-12-03 17:56
  * @desc       : 西瓜播放器组件
 -->
 
@@ -31,8 +31,6 @@
   const player = ref();
 
   function init() {
-    console.log('test');
-
     if (player.value) {
       player.value.destroy(); // 销毁播放器
       player.value = null; // 将实例引用置空
@@ -40,7 +38,7 @@
 
     player.value = new Player({
       id: 'tVideo',
-      width: 235,
+      width: 240,
       height: 245,
       autoplay: props.isAutoPlay,
       url: props.url || 'http://vjs.zencdn.net/v/oceans.mp4',
@@ -123,18 +121,6 @@
 </script>
 
 <template>
-  <!-- <div id="tVideo">
-    <video
-      id="resizable-video"
-      controls
-      src="123"
-    ></video>
-    <div
-      id="resize-handle"
-      @mousedown="startResizing"
-    ></div>
-  </div> -->
-
   <div id="tVideo">
     <div
       id="resize-handle"
@@ -147,7 +133,7 @@
 <style scoped>
   #tVideo {
     position: fixed;
-    width: 100%; /* 初始宽度 */
+    width: 100%;
     overflow: hidden;
   }
 
