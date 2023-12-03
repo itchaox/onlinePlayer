@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-03 21:07
+ * @LastTime   : 2023-12-03 21:42
  * @desc       : 
 -->
 <script setup>
@@ -216,6 +216,17 @@
 </template>
 
 <style scoped>
+  .player {
+    font-family: LarkHackSafariFont, LarkEmojiFont, LarkChineseQuote, -apple-system, BlinkMacSystemFont, Helvetica Neue,
+      Tahoma, PingFang SC, Microsoft Yahei, Arial, Hiragino Sans GB, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+      Segoe UI Symbol, Noto Color Emoji;
+    font-weight: 300;
+
+    :deep(.el-collapse-item__header) {
+      font-weight: 300;
+    }
+  }
+
   .tip {
     color: #8f959e;
     font-size: 12px;
