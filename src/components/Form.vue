@@ -3,11 +3,11 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-03 07:22
+ * @LastTime   : 2023-12-03 17:52
  * @desc       : 
 -->
 <script setup>
-  import { ref, watch } from 'vue';
+  import { ref, watch, watchEffect } from 'vue';
   import XgPlayer from './XgPlayer.vue';
   import { bitable } from '@lark-base-open/js-sdk';
   import { ElMessage } from 'element-plus';
@@ -90,6 +90,8 @@
     const extension = url.toLowerCase().split('.').pop();
     videoType.value = extension;
   };
+
+  const volume = ref(0.6);
 </script>
 
 <template>
@@ -97,13 +99,16 @@
     <div class="tip">
       <div class="tip-text title">操作步骤:</div>
       <div class="tip-text">1. 选择视频格式</div>
-      <div class="tip-text">2. 视频地址获取方式: 选择单元格后自动获取或手动输入</div>
-      <div class="tip-text">3. 自行配置是否直播和自动播放</div>
-      <div class="tip-text">4. 点击【确认播放】按钮即可</div>
+      <div class="tip-text">2. 视频地址: 选择单元格自动获取或手动输入</div>
+      <div class="tip-text">3. 自行配置播放器功能</div>
+      <div class="tip-text">4. 点击【运行】按钮即可</div>
     </div>
     <div class="label">
       <div class="text">视频格式：</div>
-      <el-radio-group v-model="videoType">
+      <el-radio-group
+        v-model="videoType"
+        size="small"
+      >
         <el-radio-button label="mp4">MP4</el-radio-button>
         <el-radio-button label="flv">FLV</el-radio-button>
         <el-radio-button label="m3u8">M3U8</el-radio-button>
@@ -116,6 +121,7 @@
         :title="videoUrl"
         v-model="videoUrl"
         placeholder="请输入视频地址"
+        size="small"
       />
     </div>
     <el-collapse v-model="activeNames">
@@ -132,7 +138,12 @@
               class="collapse-item"
               @click="changeUrl(item)"
             >
-              {{ item }}
+              <div>
+                <el-icon><VideoCameraFilled /></el-icon>
+              </div>
+              <div class="collapse-item-text">
+                {{ item }}
+              </div>
             </div>
           </template>
           <template v-else>
@@ -145,23 +156,38 @@
       </el-collapse-item>
     </el-collapse>
 
-    <div
-      class="label"
-      v-if="videoType !== 'mp4'"
-    >
-      <div>是否直播：</div>
-      <el-switch v-model="isLive" />
-    </div>
+    <div class="switch-list">
+      <div class="switch">
+        <div>预设音量：</div>
+        <el-input-number
+          v-model="volume"
+          :min="0"
+          :max="1"
+          size="small"
+          :step="0.1"
+          controls-position="right"
+        />
+      </div>
+      <div
+        class="switch"
+        v-if="videoType !== 'mp4'"
+      >
+        <div>是否直播：</div>
+        <el-switch v-model="isLive" />
+      </div>
 
-    <div class="label">
-      <div>自动播放：</div>
-      <el-switch v-model="isAutoPlay" />
+      <div class="switch">
+        <div>自动播放：</div>
+        <el-switch v-model="isAutoPlay" />
+      </div>
     </div>
 
     <el-button
+      class="button"
       type="primary"
       @click="play"
-      >确认播放</el-button
+      size="small"
+      ><el-icon :size="20"><CaretRight /></el-icon>运行</el-button
     >
 
     <div class="video">
@@ -170,6 +196,7 @@
         :video-type="videoType"
         :url="videoUrl"
         :isAutoPlay="isAutoPlay"
+        :volume="volume"
         :m3u8Type="isLive ? 'live' : 'replay'"
       />
     </div>
@@ -180,7 +207,7 @@
   .tip {
     color: #8f959e;
     font-size: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 14px;
     .tip-text {
       margin-bottom: 4px;
     }
@@ -195,8 +222,23 @@
     display: flex;
     align-items: center;
     white-space: nowrap;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     font-size: 14px;
+  }
+
+  .switch-list {
+    margin: 10px 0;
+  }
+
+  .switch {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .button {
   }
 
   .video {
@@ -204,15 +246,24 @@
   }
 
   .collapse-list {
-    /* max-height: 150px;
-    overflow: auto; */
   }
 
   .collapse-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .collapse-item-text {
+    margin-left: 4px;
+    font-size: 12px;
+    height: 12px;
+    line-height: 12px;
     cursor: pointer;
     white-space: nowrap;
+
     &:hover {
       color: #1456f0;
+      border-bottom: 1px solid #1456f0;
     }
   }
 </style>

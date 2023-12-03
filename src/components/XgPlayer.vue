@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-06-28 20:09
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-03 06:48
+ * @LastTime   : 2023-12-03 17:39
  * @desc       : 西瓜播放器组件
 -->
 
@@ -20,11 +20,11 @@
     url: string;
     videoType: string;
     isAutoPlay: boolean;
+    volume: number;
 
+    //FIXME flv 直播和回放 type 处理
     // m3u8 视频类型
     m3u8Type?: 'live' | 'replay'; // live 直播；replay 回放
-    width?: number;
-    height?: number;
   }
 
   const props = defineProps<Props>();
@@ -44,9 +44,11 @@
       height: 245,
       autoplay: props.isAutoPlay,
       url: props.url || 'http://vjs.zencdn.net/v/oceans.mp4',
+      volume: props.volume,
       videoAttributes: {
         crossOrigin: 'anonymous',
       },
+
       pip: true,
       screenShot: true,
       lang: 'zh',
