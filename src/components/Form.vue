@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-03 20:58
+ * @LastTime   : 2023-12-03 21:07
  * @desc       : 
 -->
 <script setup>
@@ -179,17 +179,18 @@
           controls-position="right"
         />
       </div>
-      <div
-        class="switch"
-        v-if="videoType !== 'mp4'"
-      >
-        <div>是否直播：</div>
-        <el-switch v-model="isLive" />
-      </div>
-
-      <div class="switch">
-        <div>自动播放：</div>
-        <el-switch v-model="isAutoPlay" />
+      <div class="switch-second">
+        <div class="switch">
+          <div>自动播放：</div>
+          <el-switch v-model="isAutoPlay" />
+        </div>
+        <div
+          class="switch"
+          v-if="videoType !== 'mp4'"
+        >
+          <div>是否直播：</div>
+          <el-switch v-model="isLive" />
+        </div>
       </div>
     </div>
 
@@ -241,11 +242,17 @@
     margin: 10px 0;
   }
 
+  .switch-second {
+    display: flex;
+  }
+
   .switch {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     white-space: nowrap;
     margin-bottom: 4px;
+    margin-right: 6px;
     font-size: 14px;
   }
 
